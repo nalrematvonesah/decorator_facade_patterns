@@ -12,7 +12,7 @@ This Spring Boot project demonstrates the implementation of the Decorator and Fa
 - Extensible design for adding new payment methods or decorators.
 
 ## Technology Stack
-- Java 17, Spring Boot 3.5.6
+- Java 21, Spring Boot 3.5.6
 - Spring Data JPA and Hibernate ORM
 - Maven for build automation
 - H2 (in-memory) or PostgreSQL for database
@@ -41,7 +41,6 @@ docker compose up
 "paymentMethod": "credit_card",
 "amount": 1000,
 "customerName": "Jane Doe",
-"customerEmail": "jane.doe@example.com"
 }
 
 - **Success Response:**  
