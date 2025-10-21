@@ -7,7 +7,6 @@ public class FraudDetectionDecorator extends PaymentDecorator {
 
     @Override
     public PaymentResult pay(double amount) {
-        // Pretend to detect fraud
         PaymentResult result = super.pay(amount);
         return new PaymentResult(result.isSuccess(), result.getMessage() + " Fraud detection passed.");
     }

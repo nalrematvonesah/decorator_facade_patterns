@@ -6,6 +6,7 @@ import com.example.decorator_facade_patterns.entity.Order;
 import com.example.decorator_facade_patterns.payment.*;
 import com.example.decorator_facade_patterns.service.CheckoutFacade;
 import com.example.decorator_facade_patterns.repository.OrderRepository;
+import jakarta.persistence.GeneratedValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,6 @@ public class CheckoutController {
     @Autowired
     private OrderRepository orderRepository;
 
-    // POST: Place order + customer + payment processing
     @PostMapping("/")
     public ResponseEntity<PaymentResult> checkout(@RequestBody OrderRequestDto dto) {
         Payment payment;
@@ -44,13 +44,12 @@ public class CheckoutController {
         return ResponseEntity.ok(result);
     }
 
-    // GET: List all orders
+
     @GetMapping("/orders")
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
 
-    // GET: Get order by ID
     @GetMapping("/orders/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
         return orderRepository.findById(id)
@@ -58,7 +57,6 @@ public class CheckoutController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // PUT: Update order (partial, e.g., amount)
     @PutMapping("/orders/{id}")
     public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order updatedOrder) {
         return orderRepository.findById(id)
@@ -68,6 +66,11 @@ public class CheckoutController {
                     return ResponseEntity.ok(order);
                 })
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/orders/{id}")
+    public void deleteOrder(@PathVariable Long id) {
+        orderRepository.deleteById(id);
     }
 
 
