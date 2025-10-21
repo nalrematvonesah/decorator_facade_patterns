@@ -1,90 +1,78 @@
-Decorator Facade Patterns E-commerce Project
-Project Overview
-This Spring Boot project demonstrates key design patterns—the Decorator and Facade—implemented in an e-commerce checkout system.
+# Decorator Facade Patterns E-Commerce Project
+
+## Project Overview
+This Spring Boot project demonstrates key design patterns—the Decorator and Facade—implemented in an e-commerce checkout system.  
 Users can place orders with payment via supported methods such as credit card and PayPal. Payment processing is enhanced with decorators for discount, cashback, and fraud detection without modifying core payment logic.
 
-Features
-REST API for order checkout at /api/checkout/ (POST).
+## Features
+- REST API for order checkout at `/api/checkout/` (POST).  
+- Supports dynamic payment methods with flexible decorator pattern extensions.  
+- CRUD operations on orders via `/api/checkout/orders` endpoints.  
+- Data persistence using Spring Data JPA.  
+- Layered architecture separating API, service, and database concerns.
 
-Supports dynamic payment methods with flexible decorator pattern extensions.
+## Tech Stack
+- Java 17, Spring Boot 3.5.6  
+- Spring Data JPA & Hibernate ORM  
+- Maven build system  
+- H2 (in-memory) or PostgreSQL database support  
 
-CRUD operations on orders via /api/checkout/orders endpoints.
-
-Data persistence using Spring Data JPA.
-
-Layered architecture separating API, service, and database concerns.
-
-Tech Stack
-Java 17, Spring Boot 3.5.6
-
-Spring Data JPA & Hibernate ORM
-
-Maven build system
-
-H2 (in-memory) or PostgreSQL database support
-
-Setup and Running
-Clone repository:
-
-text
+## Setup and Running
+1. Clone repository:  
 git clone <repo-url>
 cd decorator-facade-patterns
-Build and run the application:
 
-text
+2. Build and run the application:  
 mvn clean install
 mvn spring-boot:run
-Access API endpoints on http://localhost:8080
 
-API Requests for Testing
-1. Place Order - Checkout (POST)
-URL: http://localhost:8080/api/checkout/
+3. Access API endpoints on `http://localhost:8080`
 
-Body:
+## API Requests for Testing
 
-json
+### 1. Place Order - Checkout (POST)  
+- URL: `http://localhost:8080/api/checkout/`  
+- Body:
 {
-  "paymentMethod": "credit_card",
-  "amount": 1000
+"paymentMethod": "credit_card",
+"amount": 1000
 }
-Response (Success):
 
-json
+- Response (Success):
 {
-  "success": true,
-  "message": "Order processed successfully. Payment completed with discount and cashback."
+"success": true,
+"message": "Order processed successfully. Payment completed with discount and cashback."
 }
-2. List All Orders (GET)
-URL: http://localhost:8080/api/checkout/orders
 
-Response: JSON array of orders
 
-3. Get Order By ID (GET)
-URL: http://localhost:8080/api/checkout/orders/{id}
+### 2. List All Orders (GET)  
+- URL: `http://localhost:8080/api/checkout/orders`  
+- Response: JSON array of orders
 
-Response: JSON object or 404 if not found
+### 3. Get Order By ID (GET)  
+- URL: `http://localhost:8080/api/checkout/orders/{id}`  
+- Response: JSON object or 404 if not found
 
-4. Update Order (PUT)
-URL: http://localhost:8080/api/checkout/orders/{id}
-
-Body example:
-
-json
+### 4. Update Order (PUT)  
+- URL: `http://localhost:8080/api/checkout/orders/{id}`  
+- Body example:
 {
-  "amount": 1200
+"amount": 1200
 }
-Response: Updated order JSON
 
-5. Delete Order (DELETE)
-URL: http://localhost:8080/api/checkout/orders/{id}
 
-Response: 204 No Content or 404 if not found
+- Response: Updated order JSON
 
-Notes
-Use Postman or similar HTTP clients to test any of these endpoints.
+### 5. Delete Order (DELETE)  
+- URL: `http://localhost:8080/api/checkout/orders/{id}`  
+- Response: 204 No Content or 404 if not found
 
-Extend payment methods or decorators by adding new classes without changing existing code.
+---
 
-Add validations and robust error handling for production readiness.
+## Notes
+- Use Postman or similar HTTP clients to test any of these endpoints.  
+- Extend payment methods or decorators by adding new classes without changing existing code.  
+- Add validations and robust error handling for production readiness.  
+- Recommended to set up automated tests covering these API workflows.
 
-Recommended to set up automated tests covering these API workflows.
+---
