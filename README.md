@@ -12,7 +12,7 @@ Users can place orders with payment via supported methods such as credit card an
 - Layered architecture separating API, service, and database concerns.
 
 ## Tech Stack
-- Java 17, Spring Boot 3.5.6  
+- Java 21, Spring Boot 3.5.6  
 - Spring Data JPA & Hibernate ORM  
 - Maven build system  
 - H2 (in-memory) or PostgreSQL database support  
