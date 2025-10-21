@@ -69,8 +69,9 @@ public class CheckoutController {
     }
 
     @DeleteMapping("/orders/{id}")
-    public void deleteOrder(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
         orderRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 
