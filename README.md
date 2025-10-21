@@ -1,74 +1,71 @@
 # Decorator Facade Patterns E-Commerce Project
 
-## Project Overview
-This Spring Boot project demonstrates key design patterns—the Decorator and Facade—implemented in an e-commerce checkout system.  
-Users can place orders with payment via supported methods such as credit card and PayPal. Payment processing is enhanced with decorators for discount, cashback, and fraud detection without modifying core payment logic.
+## Overview
+This Spring Boot project demonstrates the implementation of the Decorator and Facade design patterns within an e-commerce checkout system. It provides a RESTful API for placing orders with multiple payment options, including credit cards and PayPal. The payment process is enhanced with decorators that handle discounts, cashback, and fraud detection without changing the core payment logic.
 
 ## Features
-- REST API for order checkout at `/api/checkout/` (POST).  
-- Supports dynamic payment methods with flexible decorator pattern extensions.  
-- CRUD operations on orders via `/api/checkout/orders` endpoints.  
-- Data persistence using Spring Data JPA.  
-- Layered architecture separating API, service, and database concerns.
+- Place orders with payment processing through `/api/checkout/` (POST).
+- Supports customer creation along with the order.
+- CRUD operations for orders through `/api/checkout/orders` endpoints.
+- Data persistence using Spring Data JPA.
+- Clean layering of controllers, services (facade), and repositories.
+- Extensible design for adding new payment methods or decorators.
 
-## Tech Stack
-- Java 21, Spring Boot 3.5.6  
-- Spring Data JPA & Hibernate ORM  
-- Maven build system  
-- H2 (in-memory) or PostgreSQL database support  
+## Technology Stack
+- Java 17, Spring Boot 3.5.6
+- Spring Data JPA and Hibernate ORM
+- Maven for build automation
+- H2 (in-memory) or PostgreSQL for database
 
-## Setup and Running
-1. Clone repository:  
-git clone <repo-url>
+## Setup Instructions
+1. Clone the repository:  
+git clone <your-repository-url>
 cd decorator-facade-patterns
 
-2. Build and run the application:  
+2. Build the project:  
 mvn clean install
+
+3. Run the application:  
+mvn clean package
 docker compose build
 docker compose up
 
-3. Access API endpoints on `http://localhost:8080`
+4. Access the API at `http://localhost:8080`
 
-## API Requests for Testing
+## API Usage and Testing
 
-### 1. Place Order - Checkout (POST)  
-- URL: `http://localhost:8080/api/checkout/`  
-- Body:
+### 1. Place Order with Customer and Payment (POST)
+- **Endpoint:** `POST /api/checkout/`
+- **Request Body Example:**  
 {
 "paymentMethod": "credit_card",
-"amount": 1000
+"amount": 1000,
+"customerName": "Jane Doe",
+"customerEmail": "jane.doe@example.com"
 }
 
-- Response (Success):
+- **Success Response:**  
 {
 "success": true,
 "message": "Order processed successfully. Payment completed with discount and cashback."
 }
 
 
-### 2. List All Orders (GET)  
-- URL: `http://localhost:8080/api/checkout/orders`  
-- Response: JSON array of orders
+### 2. Retrieve All Orders (GET)
+- **Endpoint:** `GET /api/checkout/orders`
+- **Response:** Array of all orders in JSON format.
 
-### 3. Get Order By ID (GET)  
-- URL: `http://localhost:8080/api/checkout/orders/{id}`  
-- Response: JSON object or 404 if not found
+### 3. Retrieve Order by ID (GET)
+- **Endpoint:** `GET /api/checkout/orders/{id}`
+- **Response:** Order object or 404 Not Found if not present.
 
-### 4. Update Order (PUT)  
-- URL: `http://localhost:8080/api/checkout/orders/{id}`  
-- Body example:
+### 4. Update Order (PUT)
+- **Endpoint:** `PUT /api/checkout/orders/{id}`
+- **Request Body Example:**  
 {
 "amount": 1200
 }
 
-
-- Response: Updated order JSON
----
-
-## Notes
-- Use Postman or similar HTTP clients to test any of these endpoints.  
-- Extend payment methods or decorators by adding new classes without changing existing code.  
-- Add validations and robust error handling for production readiness.  
-- Recommended to set up automated tests covering these API workflows.
+- **Response:** Updated order object or 404 if not found.
 
 ---
