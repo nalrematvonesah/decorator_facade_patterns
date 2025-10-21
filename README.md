@@ -24,7 +24,8 @@ cd decorator-facade-patterns
 
 2. Build and run the application:  
 mvn clean install
-mvn spring-boot:run
+docker compose build
+docker compose up
 
 3. Access API endpoints on `http://localhost:8080`
 
@@ -62,11 +63,6 @@ mvn spring-boot:run
 
 
 - Response: Updated order JSON
-
-### 5. Delete Order (DELETE)  
-- URL: `http://localhost:8080/api/checkout/orders/{id}`  
-- Response: 204 No Content or 404 if not found
-
 ---
 
 ## Notes
