@@ -7,6 +7,7 @@ import com.example.decorator_facade_patterns.payment.*;
 import com.example.decorator_facade_patterns.repository.CustomerRepository;
 import com.example.decorator_facade_patterns.repository.OrderRepository;
 import com.example.decorator_facade_patterns.repository.PaymentRecordRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,5 +48,16 @@ public class CheckoutFacade {
         paymentRecordRepository.save(paymentRecord);
 
         return new PaymentResult(true, "Order processed successfully. " + result.getMessage());
+    }
+
+    @Transactional
+    public void deleteOrder(Long id) {
+        if (!orderRepository.existsById(id)) {
+            throw new EntityNotFoundException("Order with id " + id + " not found");
+        }
+
+        paymentRecordRepository.deleteByOrderId(id);
+
+        orderRepository.deleteById(id);
     }
 }

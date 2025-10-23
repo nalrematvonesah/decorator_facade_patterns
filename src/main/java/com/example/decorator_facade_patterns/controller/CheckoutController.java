@@ -6,8 +6,9 @@ import com.example.decorator_facade_patterns.entity.Order;
 import com.example.decorator_facade_patterns.payment.*;
 import com.example.decorator_facade_patterns.service.CheckoutFacade;
 import com.example.decorator_facade_patterns.repository.OrderRepository;
-import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,21 +59,28 @@ public class CheckoutController {
     }
 
     @PutMapping("/orders/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order updatedOrder) {
+    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody OrderRequestDto dto) {
         return orderRepository.findById(id)
                 .map(order -> {
-                    order.setAmount(updatedOrder.getAmount());
+                    order.setAmount(dto.getAmount());
+                    if (order.getCustomer() == null) {
+                        order.setCustomer(new Customer());
+                    }
+                    order.getCustomer().setName(dto.getCustomerName());
                     orderRepository.save(order);
                     return ResponseEntity.ok(order);
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
 
+
     @DeleteMapping("/orders/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
-        orderRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+        try {
+            checkoutFacade.deleteOrder(id);
+            return ResponseEntity.noContent().build(); // 204 success
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();  // 404 if order not found
+        }
     }
-
-
 }
